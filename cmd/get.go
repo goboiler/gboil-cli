@@ -22,8 +22,8 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"github.com/goboiler/goboil/internal/github"
-	"github.com/goboiler/goboil/internal/utils"
+	"github.com/goboiler/gboil-cli/internal/github"
+	"github.com/goboiler/gboil-cli/internal/utils"
 	"github.com/spf13/cobra"
 )
 

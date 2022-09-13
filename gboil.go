@@ -21,7 +21,7 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/goboiler/goboil/cmd"
+import "github.com/goboiler/gboil-cli/cmd"
 
 func main() {
 	cmd.Execute()

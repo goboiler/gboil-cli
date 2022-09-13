@@ -1,4 +1,4 @@
-module github.com/goboiler/goboil
+module github.com/goboiler/gboil-cli
 
 go 1.19
 
