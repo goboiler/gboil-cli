@@ -6,6 +6,8 @@
 go install github.com/goboiler/gboil-cli/gboil
 ```
 
+## Usage
+
 ```bash
 Easy to use boilerplate generator for Go, Rust, Javascript and more.
 
