@@ -12,5 +12,5 @@ brews:
       name: danecwalker
       email: dane@danecwalker.com
     tap:
-      owner: danecwalker
+      owner: goboiler
       name: homebrew-gboil-cli
