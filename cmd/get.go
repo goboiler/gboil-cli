@@ -36,6 +36,8 @@ var getCmd = &cobra.Command{
 	Use:   "get [URL] [path]",
 	Short: "Get a boilerplate",
 	Args:  cobra.MinimumNArgs(1),
+	Example: `gboil get react my-app
+gboil get user/repo my-app`,
 	Run: func(cmd *cobra.Command, args []string) {
 		template = args[0]
 		path := "."
