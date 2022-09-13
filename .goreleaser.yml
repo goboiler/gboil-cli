@@ -7,41 +7,39 @@ before:
   - go mod download
 
 builds:
-  - env:
-      - CGO_ENABLED=0
-    goos:
-      - darwin
-      - linux
-    goarch:
-      - amd64
-      - arm64
-    ignore:
-      - goos: darwin
-        goarch: 386
-      - goos: linux
-        goarch: arm
-        goarm: 7
-      - goarm: mips64
-        gomips: hardfloat
-    # Run upx after build finished
-    hooks:
-      post: ./upx.sh
+  main: ./gboil
+  env:
+    - CGO_ENABLED=0
+  goos:
+    - darwin
+    - linux
+  goarch:
+    - amd64
+    - arm
+    - arm64
+  ignore:
+    - goos: darwin
+      goarch: 386
+  # Run upx after build finished
+  hooks:
+    post: ./upx.sh
+  overrides:
+    ldflags:
+      - -s -w
 
 archives:
-  - name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"  
-    replacements:
-      amd64: x86_64
+  name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"  
 
-project_name: homebrew-gboil-cli
+project_name: gboil-cli
 
 # Check https://goreleaser.com/customization/homebrew/
 brews:
-  - homepage: 'https://github.com/goboiler/homebrew-gboil-cli'
-    description: 'gboil-cli homebrew package.'
-    folder: Formula
-    commit_author:
-      name: danecwalker
-      email: dane@danecwalker.com
-    tap:
-      owner: danecwalker
-      name: homebrew-gboil-cli
+  homepage: 'https://github.com/goboiler/homebrew-gboil-cli'
+  description: 'gboil-cli homebrew package.'
+  folder: Formula
+  commit_author:
+    name: danecwalker
+    email: dane@danecwalker.com
+  tap:
+    owner: danecwalker
+    name: homebrew-gboil-cli
