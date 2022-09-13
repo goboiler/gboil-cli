@@ -5,7 +5,7 @@ project_name: gboil
 
 # Check https://goreleaser.com/customization/homebrew/
 brews:
-  - homepage: 'https://github.com/goboiler/homebrew-gboil-cli'
+  - homepage: 'https://github.com/goboiler/gboil-cli'
     description: 'gboil-cli homebrew package.'
     folder: Formula
     commit_author:
@@ -13,4 +13,4 @@ brews:
       email: dane@danecwalker.com
     tap:
       owner: goboiler
-      name: homebrew-gboil-cli
+      name: gboil-cli
