@@ -1,7 +1,7 @@
 builds:
   - main: ./gboil
 
-project_name: gboil-cli
+project_name: gboil
 
 # Check https://goreleaser.com/customization/homebrew/
 brews:

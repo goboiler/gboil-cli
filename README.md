@@ -13,7 +13,7 @@
 ## Install
 
 ```bash
-go install github.com/goboiler/gboil-cli/gboil
+brew install gboil
 ```
 
 ## Usage
