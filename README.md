@@ -1,7 +1,7 @@
 # GBoil
 
 ```bash
-Easy to use boilerplate generator for Go, Python, and more.
+Easy to use boilerplate generator for Go, Rust, Javascript and more.
 
 See github.com/goboiler/goboil for more information.
 
