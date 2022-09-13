@@ -39,6 +39,7 @@ Available Commands:
   completion  Generate the autocompletion script for the specified shell
   get         Get a boilerplate
   help        Help about any command
+  list        List official boilerplates
 
 Flags:
   -h, --help   help for gboil
