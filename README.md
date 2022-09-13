@@ -1,7 +1,7 @@
 <center>
-<img height="200" src="./assets/boiler.png" />
-<h1>gboil-cli</h1>
-<a href="https://www.freepik.com/author/macrovector">Logo Designed by macrovector / Freepik</a>
+  <img align="center" height="200" src="./assets/boiler.png" />
+  <h1 align="center">gboil-cli</h1>
+  <a align="center" href="https://www.freepik.com/author/macrovector">Logo Designed by macrovector / Freepik</a>
 </center>
 <br/>
 <br/>
