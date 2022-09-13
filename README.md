@@ -12,6 +12,15 @@
 
 ## Install
 
+### Brew
+
+```bash
+brew tap goboiler/gboil-cli
+brew install gboil
+```
+
+### Go
+
 ```bash
 go install github.com/goboiler/gboil-cli/gboil
 ```
