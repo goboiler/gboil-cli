@@ -2,6 +2,8 @@
 <center>
   <img height="200" src="./assets/boiler.png" />
   <h1>gboil-cli</h1>
+  <img src="https://github.com/goboiler/homebrew-gboil-cli/actions/workflows/release.yml/badge.svg" />
+  <br/>
   <a href="https://www.freepik.com/author/macrovector">Logo Designed by macrovector / Freepik</a>
 </center>
 </div>
