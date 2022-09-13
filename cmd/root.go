@@ -31,7 +31,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "gboil",
 	Short: "Easy to use boilerplate generator",
-	Long: `Easy to use boilerplate generator for Go, Python, and more.
+	Long: `Easy to use boilerplate generator for Go, Rust, Javascript and more.
 
 See github.com/goboiler/goboil for more information.`,
 	// Uncomment the following line if your bare application
