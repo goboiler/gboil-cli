@@ -23,3 +23,5 @@ go.work
 #build
 Makefile
 bin
+
+.DS_Store

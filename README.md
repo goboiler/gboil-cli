@@ -10,6 +10,8 @@
 <br/>
 <br/>
 
+![screenshot_1](./assets/screenshot_1.png)
+
 ## Install
 
 ### Brew
@@ -39,6 +41,7 @@ Available Commands:
   completion  Generate the autocompletion script for the specified shell
   get         Get a boilerplate
   help        Help about any command
+  init        Generate a boilerplate
   list        List official boilerplates
 
 Flags:
