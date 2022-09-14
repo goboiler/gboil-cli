@@ -32,7 +32,7 @@ func Gen() {
 
 	var tsha []string
 	filepath.Walk(".", func(path string, info fs.FileInfo, err error) error {
-		if !info.IsDir() && !strings.HasPrefix(path, ".git/") {
+		if !info.IsDir() && !strings.HasPrefix(path, ".git/") && !strings.HasPrefix(path, ".gboil.yml") && !strings.HasPrefix(path, "node_modules/") && !strings.HasPrefix(path, ".DS_Store") {
 			b, err := os.ReadFile(path)
 			if err != nil {
 				return err
