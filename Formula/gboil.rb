@@ -5,20 +5,20 @@
 class Gboil < Formula
   desc "gboil-cli homebrew package."
   homepage "https://github.com/goboiler/gboil-cli"
-  version "0.0.2"
+  version "0.0.3"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_darwin_amd64.tar.gz"
-      sha256 "501c62e3945786e8323a055a8c9c0024f3ccb94439dd3ae62df4b693d1f2ad15"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.3/gboil_0.0.3_darwin_amd64.tar.gz"
+      sha256 "881d092f3f6da88fd6319af4ae31e80f2037f762f4c156704c7177d57a844d79"
 
       def install
         bin.install "gboil"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_darwin_arm64.tar.gz"
-      sha256 "6924d0977a35ba0e4be0d603bf52273c98393a3c8fc1c2eea933aa6183889acd"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.3/gboil_0.0.3_darwin_arm64.tar.gz"
+      sha256 "3e90b8542c4f106b6b8c58e8edf6aa2d0743955fe425c8cc5161f5021038ea74"
 
       def install
         bin.install "gboil"
@@ -28,16 +28,16 @@ class Gboil < Formula
 
   on_linux do
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_linux_arm64.tar.gz"
-      sha256 "f665d4f27405f9f0fed68ab9b2854563c6696ab4e5daa986346ae05908f3b40e"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.3/gboil_0.0.3_linux_arm64.tar.gz"
+      sha256 "a0c651f7e09ba781837ded8c971dafcc56da2965e8aa06cd59dd2fd2efa1c147"
 
       def install
         bin.install "gboil"
       end
     end
     if Hardware::CPU.intel?
-      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_linux_amd64.tar.gz"
-      sha256 "fd4e41da0a76c2017e830e207e53e9e85201171147ec853ad3fbce8f567a0996"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.3/gboil_0.0.3_linux_amd64.tar.gz"
+      sha256 "2c3feb0aa185dbd9fecde4d1e0c471fc0612003ab20b44b587ff82c694e05c02"
 
       def install
         bin.install "gboil"
