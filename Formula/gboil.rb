@@ -5,20 +5,20 @@
 class Gboil < Formula
   desc "gboil-cli homebrew package."
   homepage "https://github.com/goboiler/gboil-cli"
-  version "0.0.1"
+  version "0.0.2"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/goboiler/gboil-cli/releases/download/v0.0.1/gboil_0.0.1_darwin_amd64.tar.gz"
-      sha256 "fa8cb9804600f1ca8a119af4c76a42ed1351ee0d48f50d5a8e2a4a5296cac05c"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_darwin_amd64.tar.gz"
+      sha256 "501c62e3945786e8323a055a8c9c0024f3ccb94439dd3ae62df4b693d1f2ad15"
 
       def install
         bin.install "gboil"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/goboiler/gboil-cli/releases/download/v0.0.1/gboil_0.0.1_darwin_arm64.tar.gz"
-      sha256 "2ab818c30cf91aa09d4c95d127cc4a901485690f6af282ac43b4acb5d416b16b"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_darwin_arm64.tar.gz"
+      sha256 "6924d0977a35ba0e4be0d603bf52273c98393a3c8fc1c2eea933aa6183889acd"
 
       def install
         bin.install "gboil"
@@ -28,16 +28,16 @@ class Gboil < Formula
 
   on_linux do
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/goboiler/gboil-cli/releases/download/v0.0.1/gboil_0.0.1_linux_arm64.tar.gz"
-      sha256 "220e95d3747e0ae4ea45cf29e5780de75d0e11166ea7bde48e1388a018a0c2fc"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_linux_arm64.tar.gz"
+      sha256 "f665d4f27405f9f0fed68ab9b2854563c6696ab4e5daa986346ae05908f3b40e"
 
       def install
         bin.install "gboil"
       end
     end
     if Hardware::CPU.intel?
-      url "https://github.com/goboiler/gboil-cli/releases/download/v0.0.1/gboil_0.0.1_linux_amd64.tar.gz"
-      sha256 "710349404590c77bfaffa362b0add469b0f482862d0d148204033720f5ba82f3"
+      url "https://github.com/goboiler/homebrew-gboil-cli/releases/download/v0.0.2/gboil_0.0.2_linux_amd64.tar.gz"
+      sha256 "fd4e41da0a76c2017e830e207e53e9e85201171147ec853ad3fbce8f567a0996"
 
       def install
         bin.install "gboil"
