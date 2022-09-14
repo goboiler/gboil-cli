@@ -22,9 +22,13 @@ func ListOfficial() {
 	c.Visit("https://github.com/goboiler/templates")
 
 	writer := tabwriter.NewWriter(os.Stdout, 0, 8, 11, '\t', tabwriter.AlignRight)
-	filled := make([]string, len(templates)+3-len(templates)%3)
-	copy(filled, templates)
-	fmt.Println(len(templates))
+	var filled []string
+	if len(templates)%3 != 0 {
+		filled = make([]string, len(templates)+3-len(templates)%3)
+		copy(filled, templates)
+	} else {
+		filled = templates
+	}
 	for i := 0; i < len(filled); i += 3 {
 		fmt.Fprintf(writer, "%s\t%s\t%s\n", filled[i], filled[i+1], filled[i+2])
 	}

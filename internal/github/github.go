@@ -1,6 +1,7 @@
 package github
 
 import (
+	"crypto/sha256"
 	"errors"
 	"fmt"
 	"io"
@@ -10,127 +11,122 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/gocolly/colly"
+	"github.com/goboiler/gboil-cli/internal/boiler"
 	"github.com/schollz/progressbar/v3"
+	"gopkg.in/yaml.v3"
 )
 
 type irepo interface {
-	FetchContent() []content
-	fetch() []content
+	FetchContent() *boiler.Gboil
+	fetch() *boiler.Gboil
 	Download(string)
-}
-
-type content_type string
-
-const (
-	dir  content_type = "dir"
-	file content_type = "file"
-)
-
-type content struct {
-	_type content_type
-	name  string
-	url   string
 }
 
 type repo struct {
 	url     string
-	content []content
+	content *boiler.Gboil
 }
 
-func (r *repo) fetch() []content {
-	c := colly.NewCollector()
+func (r *repo) fetch() *boiler.Gboil {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", strings.Replace(r.url+"/.gboil.yml", "/tree/", "/raw/", 1), nil)
+	if err != nil {
+		return nil
+	}
 
-	c.OnHTML("div[aria-labelledby=\"files\"]", func(h *colly.HTMLElement) {
-		wg := &sync.WaitGroup{}
-		h.ForEach("div[role=\"row\"]", func(_ int, e *colly.HTMLElement) {
-			wg.Add(1)
-			go func(e *colly.HTMLElement) {
-				if e.ChildAttr("div[role=\"gridcell\"] > svg", "aria-label") == "Directory" {
-					url := "https://github.com" + e.ChildAttr("div[role=\"rowheader\"] > span > a", "href")
-					newRepo := NewRepo(url)
-					_c := newRepo.fetch()
-					for i := 0; i < len(_c); i++ {
-						_c[i].name = e.ChildAttr("div[role=\"rowheader\"] > span > a", "title") + "/" + _c[i].name
-					}
+	res, err := client.Do(req)
+	if err != nil {
+		return nil
+	}
 
-					r.content = append(r.content, _c...)
-				} else if e.ChildAttr("div[role=\"gridcell\"] > svg", "aria-label") == "File" {
-					title := e.ChildAttr("div[role=\"rowheader\"] > span > a", "title")
-					url := "https://github.com" + e.ChildAttr("div[role=\"rowheader\"] > span > a", "href")
-					url = strings.Replace(url, "/blob/", "/raw/", 1)
-					r.content = append(r.content, content{file, title, url})
-				}
-				wg.Done()
-			}(e)
-		})
+	defer res.Body.Close()
+	if res.StatusCode != 200 {
+		return nil
+	}
 
-		wg.Wait()
-	})
+	var y boiler.Gboil
+	err = yaml.NewDecoder(res.Body).Decode(&y)
+	if err != nil {
+		return nil
+	}
 
-	c.Visit(r.url)
-
-	return r.content
+	r.content = &y
+	return &y
 }
 
-func (r *repo) FetchContent() []content {
+func (r *repo) FetchContent() *boiler.Gboil {
 	fmt.Println("Fetching files from", r.url)
 	return r.fetch()
 }
 
 func (r *repo) Download(path string) {
-	fmt.Println("Downloading template", r.url)
-	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
-		err := os.Mkdir(path, os.ModePerm)
+	_p := path
+	if _p == "" {
+		_p = r.content.Name
+	}
+
+	if _, err := os.Stat(_p); errors.Is(err, os.ErrNotExist) {
+		err := os.Mkdir(_p, os.ModePerm)
 		if err != nil {
 			panic(err)
 		}
 	}
 
-	os.Chdir(path)
+	os.Chdir(_p)
+
+	fmt.Println("Downloading", r.url, "to", _p)
 
 	wg := &sync.WaitGroup{}
+	bar := progressbar.Default(int64(len(r.content.Files)))
 
-	bar := progressbar.Default(int64(len(r.content)))
-	for _, c := range r.content {
+	for _, f := range r.content.Files {
 		wg.Add(1)
-		go func(c content) {
-			if _, err := os.Stat(ppath.Dir(c.name)); errors.Is(err, os.ErrNotExist) {
-				err := os.MkdirAll(ppath.Dir(c.name), os.ModePerm)
+		go func(f *boiler.File) {
+			fmt.Println("==> Downloading", f.Path)
+			if _, err := os.Stat(ppath.Dir(f.Path)); errors.Is(err, os.ErrNotExist) {
+				err := os.MkdirAll(ppath.Dir(f.Path), os.ModePerm)
 				if err != nil {
 					panic(err)
 				}
 			}
 
-			f, err := os.Create(c.name)
+			fi, err := os.Create(f.Path)
 			if err != nil {
 				panic(err)
 			}
+			defer fi.Close()
 
 			client := &http.Client{}
-			req, err := http.NewRequest("GET", c.url, nil)
+			req, err := http.NewRequest("GET", strings.Replace(r.url+"/"+f.Path, "/tree/", "/raw/", 1), nil)
 			if err != nil {
 				panic(err)
 			}
 
 			res, err := client.Do(req)
-			if err != nil {
+			if err != nil || res.StatusCode != 200 {
 				panic(err)
 			}
 
 			defer res.Body.Close()
-			content, err := io.ReadAll(res.Body)
+			b, err := io.ReadAll(res.Body)
 			if err != nil {
 				panic(err)
 			}
 
-			_, err = f.Write(content)
-			if err != nil {
-				panic(err)
+			_s := sha256.New()
+			_s.Write(b)
+			_sha256 := fmt.Sprintf("%x", _s.Sum(nil))
+			if _sha256 != f.Sha {
+				fmt.Println(f.Sha)
+				fmt.Println(_sha256)
+				panic("sha256 mismatch")
 			}
+
+			fi.Write(b)
+
 			bar.Add(1)
 			wg.Done()
-		}(c)
+		}(f)
 	}
 
 	wg.Wait()
@@ -139,7 +135,7 @@ func (r *repo) Download(path string) {
 }
 
 func NewRepo(url string) irepo {
-	return &repo{url, []content{}}
+	return &repo{url, nil}
 }
 
 func NewWorker(repo irepo, download_path string) {

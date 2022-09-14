@@ -22,44 +22,29 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"github.com/goboiler/gboil-cli/internal/github"
-	"github.com/goboiler/gboil-cli/internal/utils"
+	"github.com/goboiler/gboil-cli/internal/boiler"
 	"github.com/spf13/cobra"
 )
 
-var (
-	template string
-)
-
-// getCmd represents the get command
-var getCmd = &cobra.Command{
-	Use:   "get [URL] [path]",
-	Short: "Get a boilerplate",
-	Args:  cobra.MinimumNArgs(1),
-	Example: `gboil get react my-app
-gboil get user/repo my-app`,
+// generateCmd represents the generate command
+var generateCmd = &cobra.Command{
+	Use:   "init",
+	Short: "Generate a boilerplate",
 	Run: func(cmd *cobra.Command, args []string) {
-		template = args[0]
-		path := ""
-		if len(args) > 1 {
-			path = args[1]
-		}
-		url := utils.ParseTemplate(template)
-		repo := github.NewRepo(url)
-		github.NewWorker(repo, path)
+		boiler.Gen()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(getCmd)
+	rootCmd.AddCommand(generateCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// getCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// generateCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// getCmd.Flags().StringVarP(&urlPath, "template", "t", "", "url or name of the boilerplate.")
+	// generateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
